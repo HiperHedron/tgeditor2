@@ -59,7 +59,7 @@ public class DBTools{
 	
 	public static void insertInteraction(Interaction i) {
 		String sql = "INSERT INTO Interactions(ReferenceDictionary_Reference, Name, Storyline_PageNo, MapNo, EmpathyValue, "
-					+ "SanityValue, Description, OptionalJournalEntry ) VALUES(?,?,?,?,?,?,?,?)";
+					+ "SanityValue, Description, OptionalJournalEntry, EmpathyTreshold, SanityTreshold, PagesLocked, TakeItemID ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, i.getReference());
@@ -70,10 +70,13 @@ public class DBTools{
             pstmt.setInt(6, i.getSanity());
             pstmt.setString(7, i.getDesc());
             pstmt.setString(8, i.getJournal());
-
+            pstmt.setInt(9, i.getEmpatyTreshold());
+            pstmt.setInt(10, i.getSanityTreshold());
+            pstmt.setString(11, i.getPagesLocked());
+            pstmt.setString(12, i.getTakeItemID());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            //textArea.append(e.getMessage());
+        	System.out.println(e.getMessage());
         }
 		
 	}

@@ -39,10 +39,14 @@ public class TgeWindow {
 	private String dbFilePath = "Choose a valid *.db file.";
 	//private DBTools dbt;
 	private JFrame frame;
+	private JTextField dbPathField;
+	private JTextArea txtOptionalJournalEntry;
+	
+	
 	private JTextField txtInteractionsReferenceDictionary_Reference;
 	private JTextField txtInteractionsName;
 	private JScrollPane scrollSysout;
-	protected JTextArea systemOutput = new JTextArea();
+	public JTextArea systemOutput = new JTextArea();
 	private JTabbedPane tabbedPane;
 	private JPanel InteractionsPanel;
 	private JButton btnInsertInteraction;
@@ -51,9 +55,9 @@ public class TgeWindow {
 	private JTextField txtEmpathyValue;
 	private JTextField txtSanityValue;
 	private JTextField txtDescription;
-	private JTextField txtOptionalJournalEntry;
-	private JLabel lblStorylinepageno, lblMapno, lblEmpathyvalue, lblSanityvalue, lblDescription, lblOptionaljournalentry, lblReferenceDictionary_Reference, lblInteractionName;
-	private JTextField dbPathField;
+	private JTextField txtEmpathyTreshold;
+	private JLabel lblStorylinepageno, lblMapno, lblEmpathyvalue, lblSanityvalue, lblDescription, lblEmpatyTreshold, lblReferenceDictionary_Reference, lblInteractionName;
+	
 	private JLabel lblItemid;
 	private JLabel lblNameItems;
 	private JLabel lblDescriptionItems;
@@ -83,10 +87,14 @@ public class TgeWindow {
 	private JButton btnDeleteReference;
 	private JButton btnDeleteItem;
 	private JButton btnDeleteInteraction;
+	private JTextField txtSanityTreshold;
+	private JTextField txtPagesLocked;
+	private JTextField txtTakeItemID;
+	private JLabel lblOptionaljournalentry;
+	private JLabel label;
+	private JLabel label_1;
 
-	/**
-	 * Launch the application.
-	 */
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -104,23 +112,17 @@ public class TgeWindow {
 		//dbt = new DBTools();
 	}
 
-	/**
-	 * Create the application.
-	 */
+	
 	public TgeWindow() {
 		
 		initialize();
-		//dbt = new DBTools();
 		
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		
 		frame = new JFrame();
-		frame.setBounds(100, 100, 663, 658);
+		frame.setBounds(100, 100, 663, 729);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -159,8 +161,13 @@ public class TgeWindow {
 						txtMapNo.getText(), 
 						Integer.parseInt(txtEmpathyValue.getText()), 
 						Integer.parseInt(txtSanityValue.getText()), 
-						txtDescription.getText(), 
-						txtOptionalJournalEntry.getText());
+						txtDescription.getText(),
+						txtOptionalJournalEntry.getText(),
+						Integer.parseInt(txtEmpathyTreshold.getText()),
+						Integer.parseInt(txtSanityTreshold.getText()),
+						txtPagesLocked.getText(),
+						txtTakeItemID.getText()
+						);
 				try {
 					DBTools.connect(dbPathField.getText());
 					DBTools.insertInteraction(i);
@@ -172,15 +179,15 @@ public class TgeWindow {
 				}
 			}
 		});
-		btnInsertInteraction.setBounds(10, 243, 89, 23);
+		btnInsertInteraction.setBounds(523, 378, 89, 74);
 		InteractionsPanel.add(btnInsertInteraction);
 		
 		EmpValWarning = new JLabel("Integer");
-		EmpValWarning.setBounds(511, 114, 101, 14);
+		EmpValWarning.setBounds(354, 114, 101, 14);
 		InteractionsPanel.add(EmpValWarning);
 		
 		SanityValWarning = new JLabel("Integer");
-		SanityValWarning.setBounds(511, 139, 101, 14);
+		SanityValWarning.setBounds(354, 139, 101, 14);
 		InteractionsPanel.add(SanityValWarning);
 		
 		JButton btnInteractionsClear = new JButton("Clear");
@@ -189,14 +196,18 @@ public class TgeWindow {
 				txtInteractionsReferenceDictionary_Reference.setText("");
 				txtInteractionsName.setText("");
 				txtInteractions_Storyline_PageNo.setText("");
-				txtMapNo.setText(""); 
-				txtEmpathyValue.setText(""); 
-				txtSanityValue.setText(""); 
-				txtDescription.setText(""); 
+				txtMapNo.setText("");
+				txtEmpathyValue.setText("");
+				txtSanityValue.setText("");
+				txtDescription.setText("");
 				txtOptionalJournalEntry.setText("");
+				txtEmpathyTreshold.setText("");
+				txtSanityTreshold.setText("");
+				txtPagesLocked.setText("");
+				txtTakeItemID.setText("");
 			}
 		});
-		btnInteractionsClear.setBounds(103, 243, 89, 23);
+		btnInteractionsClear.setBounds(523, 346, 89, 23);
 		InteractionsPanel.add(btnInteractionsClear);
 		
 		btnDeleteInteraction = new JButton("Delete Interaction");
@@ -212,8 +223,55 @@ public class TgeWindow {
 				}
 			}
 		});
-		btnDeleteInteraction.setBounds(10, 277, 142, 23);
+		
+		btnDeleteInteraction.setBounds(10, 434, 142, 23);
 		InteractionsPanel.add(btnDeleteInteraction);
+		
+		JLabel lblSanitytreshold = new JLabel("SanityTreshold");
+		lblSanitytreshold.setBounds(10, 195, 182, 14);
+		InteractionsPanel.add(lblSanitytreshold);
+		
+		txtSanityTreshold = new JTextField();
+		txtSanityTreshold.setColumns(10);
+		txtSanityTreshold.setBounds(202, 192, 142, 20);
+		InteractionsPanel.add(txtSanityTreshold);
+		
+		JLabel lblPageslocked = new JLabel("PagesLocked");
+		lblPageslocked.setBounds(10, 223, 182, 14);
+		InteractionsPanel.add(lblPageslocked);
+		
+		txtPagesLocked = new JTextField();
+		txtPagesLocked.setColumns(10);
+		txtPagesLocked.setBounds(202, 220, 299, 20);
+		InteractionsPanel.add(txtPagesLocked);
+		
+		JLabel lblTakeItemID = new JLabel("TakeItemID");
+		lblTakeItemID.setBounds(10, 251, 182, 14);
+		InteractionsPanel.add(lblTakeItemID);
+		
+		txtTakeItemID = new JTextField();
+		txtTakeItemID.setColumns(10);
+		txtTakeItemID.setBounds(202, 248, 299, 20);
+		InteractionsPanel.add(txtTakeItemID);
+		
+		lblOptionaljournalentry = new JLabel("OptionalJournalEntry");
+		lblOptionaljournalentry.setBounds(10, 279, 182, 14);
+		InteractionsPanel.add(lblOptionaljournalentry);
+		
+		label = new JLabel("Integer");
+		label.setBounds(354, 167, 101, 14);
+		InteractionsPanel.add(label);
+		
+		label_1 = new JLabel("Integer");
+		label_1.setBounds(354, 195, 101, 14);
+		InteractionsPanel.add(label_1);
+		
+		txtOptionalJournalEntry = new JTextArea();
+		txtOptionalJournalEntry.setWrapStyleWord(true);
+		txtOptionalJournalEntry.setRows(8);
+		txtOptionalJournalEntry.setLineWrap(true);
+		txtOptionalJournalEntry.setBounds(202, 279, 299, 57);
+		InteractionsPanel.add(txtOptionalJournalEntry);
 	}
 	
 	public void addJPanelStoryline() {
@@ -563,12 +621,12 @@ public class TgeWindow {
 		InteractionsPanel.add(lblSanityvalue);
 		
 		lblDescription = new JLabel("Description");
-		lblDescription.setBounds(10, 165, 182, 14);
+		lblDescription.setBounds(10, 350, 182, 14);
 		InteractionsPanel.add(lblDescription);
 		
-		lblOptionaljournalentry = new JLabel("OptionalJournalEntry");
-		lblOptionaljournalentry.setBounds(10, 190, 182, 14);
-		InteractionsPanel.add(lblOptionaljournalentry);
+		lblEmpatyTreshold = new JLabel("EmpathyTreshold");
+		lblEmpatyTreshold.setBounds(10, 167, 182, 14);
+		InteractionsPanel.add(lblEmpatyTreshold);
 		
 		
 		txtInteractionsReferenceDictionary_Reference = new JTextField();
@@ -600,32 +658,32 @@ public class TgeWindow {
 		
 		txtEmpathyValue = new JTextField();
 		txtEmpathyValue.setColumns(10);
-		txtEmpathyValue.setBounds(202, 111, 299, 20);
+		txtEmpathyValue.setBounds(202, 111, 142, 20);
 		InteractionsPanel.add(txtEmpathyValue);
 		
 		txtSanityValue = new JTextField();
 		txtSanityValue.setColumns(10);
-		txtSanityValue.setBounds(202, 136, 299, 20);
+		txtSanityValue.setBounds(202, 136, 142, 20);
 		InteractionsPanel.add(txtSanityValue);
 		
 		txtDescription = new JTextField();
 		lblDescription.setLabelFor(txtDescription);
 		txtDescription.setColumns(10);
-		txtDescription.setBounds(202, 162, 299, 20);
+		txtDescription.setBounds(202, 347, 299, 100);
 		InteractionsPanel.add(txtDescription);
 		
-		txtOptionalJournalEntry = new JTextField();
-		lblOptionaljournalentry.setLabelFor(txtOptionalJournalEntry);
-		txtOptionalJournalEntry.setColumns(10);
-		txtOptionalJournalEntry.setBounds(202, 187, 299, 20);
-		InteractionsPanel.add(txtOptionalJournalEntry);
+		txtEmpathyTreshold = new JTextField();
+		lblEmpatyTreshold.setLabelFor(txtEmpathyTreshold);
+		txtEmpathyTreshold.setColumns(10);
+		txtEmpathyTreshold.setBounds(202, 164, 142, 20);
+		InteractionsPanel.add(txtEmpathyTreshold);
 		
 		addBtnInserInteractionToThePanel();
 	}
 
 	private void addTabbedPane() {
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(10, 45, 627, 423);
+		tabbedPane.setBounds(10, 45, 627, 496);
 		frame.getContentPane().add(tabbedPane);
 		
 		addJPanelInteractions();
@@ -643,7 +701,7 @@ public class TgeWindow {
 		systemOutput.setBackground(Color.BLACK);
 		systemOutput.setBounds(121, 362, 516, 118);
 		scrollSysout = new JScrollPane(systemOutput);
-		scrollSysout.setLocation(10, 481);
+		scrollSysout.setLocation(10, 552);
 		scrollSysout.setSize(627, 127);
 		scrollSysout.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		frame.getContentPane().add(scrollSysout);
