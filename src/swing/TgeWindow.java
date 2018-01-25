@@ -591,7 +591,7 @@ public class TgeWindow {
 		btnDeleteInventoryItemsMatch.setBounds(10, 434, 142, 23);
 		inventoryItemsMatch.add(btnDeleteInventoryItemsMatch);
 		
-		inventoryItemsMatch.add(txtStartingSanity_Spec);
+		//inventoryItemsMatch.add(txtStartingSanity_Spec);
 		
 		txtItemID_2_Combine = new JTextField();
 		txtItemID_2_Combine.setColumns(10);
