@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import db.entity.Interaction;
+import db.entity.InventoryItemsMatch;
 import db.entity.Item;
 import db.entity.ReferenceDictionary;
 import db.entity.Storyline;
@@ -114,9 +115,27 @@ public class DBTools{
             pstmt.setString(1, i.getPageNo());
             pstmt.setString(2, i.getPageText());
             pstmt.setString(3, i.getMilestoneJournalEntry());
-
             pstmt.executeUpdate();
-       
+	}
+	
+	public static void insertInventoryItemsMatch(InventoryItemsMatch i) throws SQLException {
+		String sql = "INSERT INTO InventoryItemsMatch(ItemID_1, ItemID_2, CreatedObjectID, EffectDescription, Sanity, Empathy, SanityTreshold, EmpathyTreshold, PageNo, MapNo, OptionalJournalEntry, PagesLocked ) "
+				+ "VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+		
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, i.getItemID_1());
+            pstmt.setString(2, i.getItemID_2());
+            pstmt.setString(3, i.getCreatedObjectID());
+            pstmt.setString(4, i.getEfectDesc());
+            pstmt.setInt(5, i.getSanity());
+            pstmt.setInt(6, i.getEmpathy());
+            pstmt.setInt(7, i.getSanityTreshold());
+            pstmt.setInt(8, i.getEmpathyTreshold());
+            pstmt.setString(9, i.getPageNo());
+            pstmt.setString(10, i.getMapNo());
+            pstmt.setString(11, i.getOptionalJournalEntry());
+            pstmt.setString(12, i.getPagesLocked());
+            pstmt.executeUpdate();
 	}
 	
 	public static List<ReferenceDictionary> selectReferenceDictionary() throws SQLException{
@@ -133,6 +152,52 @@ public class DBTools{
 			}
 			
 		return rfl;
+	}
+	
+	public static List<Item> selectItems() throws SQLException{
+		String sql = "SELECT * FROM Items";
+		List<Item> itemList = new ArrayList<Item>();
+		Statement stmt  = conn.createStatement();
+	    ResultSet rs    = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				itemList.add(new Item(
+						rs.getString("ItemID"), 
+						rs.getString("Name"), 
+						rs.getString("Description")));
+			}
+		return itemList;
+	}
+	
+	public static List<Storyline> selectStoryline(String string) throws Exception {
+		String sql = "SELECT * FROM Storyline where PageNo = '"+string+"'";
+		System.out.println(sql);
+		List<Storyline> storylist = new ArrayList<Storyline>();
+		Statement stmt  = conn.createStatement();
+	    ResultSet rs    = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				storylist.add(new Storyline(
+						rs.getString("PageNo"), 
+						rs.getString("PageText"), 
+						rs.getString("MilestoneJournalEntry")));
+			}
+		return storylist;
+	}
+	
+	public static List<Storyline> selectStoryline() throws SQLException {
+		String sql = "SELECT * FROM Storyline";
+		List<Storyline> storylist = new ArrayList<Storyline>();
+		Statement stmt  = conn.createStatement();
+	    ResultSet rs    = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				storylist.add(new Storyline(
+						rs.getString("PageNo"), 
+						rs.getString("PageText"), 
+						rs.getString("MilestoneJournalEntry")));
+			}
+		return storylist;
 	}
 
 
@@ -196,5 +261,14 @@ public class DBTools{
 	        }
 		 return out;
 	}
+
+
+	
+
+
+	
+
+
+	
 
 }

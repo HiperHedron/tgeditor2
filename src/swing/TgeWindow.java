@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 
 import db.DBTools;
 import db.entity.Interaction;
+import db.entity.InventoryItemsMatch;
 import db.entity.Item;
 import db.entity.ReferenceDictionary;
 import db.entity.Storyline;
@@ -94,11 +95,8 @@ public class TgeWindow {
 	private JTextField txtStoryName_Spec;
 	private JTextField txtStartingEmpathy_Spec;
 	private JTextField txtStartingSanity_Spec;
-	private JTextField txtItemID_1_Combine;
-	private JTextField txtItemID_2_Combine;
 	private JLabel labelPLUS;
 	private JLabel labelEQUALS;
-	private JTextField txtCreatedObjectID;
 	private JTextArea txtOptionalJEntry_Combine;
 	private JLabel lblPagenocombine;
 	private JLabel lblMapNo_Combine;
@@ -116,6 +114,8 @@ public class TgeWindow {
 	private JLabel lblEmpathyTreshold_Combine;
 	private JLabel lblPagesLocked_Combined;
 	private JTextField txtPagesLocked_Combine;
+	
+	
 
 	
 	public static void main(String[] args) {
@@ -212,7 +212,7 @@ public class TgeWindow {
 				}
 			}
 		});
-		btnInsertInteraction.setBounds(523, 378, 89, 74);
+		btnInsertInteraction.setBounds(523, 367, 90, 90);
 		InteractionsPanel.add(btnInsertInteraction);
 		
 		EmpValWarning = new JLabel("Integer");
@@ -240,7 +240,7 @@ public class TgeWindow {
 				txtTakeItemID.setText("");
 			}
 		});
-		btnInteractionsClear.setBounds(523, 346, 89, 23);
+		btnInteractionsClear.setBounds(523, 341, 89, 23);
 		InteractionsPanel.add(btnInteractionsClear);
 		
 		btnDeleteInteraction = new JButton("Delete Interaction");
@@ -438,9 +438,6 @@ public class TgeWindow {
 		btnRefreshReferenceList = new JButton("Refresh Reference List");
 		btnRefreshReferenceList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				
-				
 				try {
 					DBTools.connect(dbPathField.getText());
 					List<ReferenceDictionary> rfl = DBTools.selectReferenceDictionary();
@@ -459,8 +456,6 @@ public class TgeWindow {
 				} finally{
 					DBTools.closeConnection();
 				}
-
-				
 			}
 		});
 		btnRefreshReferenceList.setBounds(10, 136, 142, 23);
@@ -558,136 +553,255 @@ public class TgeWindow {
 		inventoryItemsMatch.add(lblItemID_1);
 		
 		JLabel lblItemID_2 = new JLabel("ItemID_2");
-		lblItemID_2.setBounds(150, 11, 50, 14);
+		lblItemID_2.setBounds(224, 11, 50, 14);
 		inventoryItemsMatch.add(lblItemID_2);
 		
 		JLabel lblCreatedObjectID = new JLabel("Created Object ID");
-		lblCreatedObjectID.setBounds(290, 11, 100, 14);
+		lblCreatedObjectID.setBounds(432, 11, 100, 14);
 		inventoryItemsMatch.add(lblCreatedObjectID);
 		
 		JTextArea txtEffectDescription_COmbine = new JTextArea();
 		txtEffectDescription_COmbine.setWrapStyleWord(true);
 		txtEffectDescription_COmbine.setRows(8);
 		txtEffectDescription_COmbine.setLineWrap(true);
-		txtEffectDescription_COmbine.setBounds(10, 92, 300, 143);
+		txtEffectDescription_COmbine.setBounds(10, 97, 300, 154);
 		inventoryItemsMatch.add(txtEffectDescription_COmbine);
 		
-		txtItemID_1_Combine = new JTextField();
-		txtItemID_1_Combine.setColumns(10);
-		txtItemID_1_Combine.setBounds(10, 36, 120, 20);
-		inventoryItemsMatch.add(txtItemID_1_Combine);
 		
 		
 		
-		JButton btnInsertInventoryItemsMatch = new JButton("Insert");
-		btnInsertInventoryItemsMatch.setBounds(10, 400, 89, 23);
-		inventoryItemsMatch.add(btnInsertInventoryItemsMatch);
 		
 		JButton btnClearInventoryItemsMatch = new JButton("Clear");
-		btnClearInventoryItemsMatch.setBounds(103, 400, 89, 23);
+		btnClearInventoryItemsMatch.setBounds(221, 434, 89, 23);
 		inventoryItemsMatch.add(btnClearInventoryItemsMatch);
 		
 		JButton btnDeleteInventoryItemsMatch = new JButton("Delete Items Match");
 		btnDeleteInventoryItemsMatch.setBounds(10, 434, 142, 23);
 		inventoryItemsMatch.add(btnDeleteInventoryItemsMatch);
 		
-		//inventoryItemsMatch.add(txtStartingSanity_Spec);
-		
-		txtItemID_2_Combine = new JTextField();
-		txtItemID_2_Combine.setColumns(10);
-		txtItemID_2_Combine.setBounds(150, 36, 120, 20);
-		inventoryItemsMatch.add(txtItemID_2_Combine);
-		
 		labelPLUS = new JLabel("+");
-		labelPLUS.setBounds(135, 39, 29, 14);
+		labelPLUS.setBounds(202, 31, 30, 30);
 		inventoryItemsMatch.add(labelPLUS);
 		
 		labelEQUALS = new JLabel("=");
-		labelEQUALS.setBounds(275, 39, 17, 14);
+		labelEQUALS.setBounds(411, 31, 30, 30);
 		inventoryItemsMatch.add(labelEQUALS);
-		
-		txtCreatedObjectID = new JTextField();
-		txtCreatedObjectID.setColumns(10);
-		txtCreatedObjectID.setBounds(290, 36, 120, 20);
-		inventoryItemsMatch.add(txtCreatedObjectID);
 		
 		txtOptionalJEntry_Combine = new JTextArea();
 		txtOptionalJEntry_Combine.setWrapStyleWord(true);
 		txtOptionalJEntry_Combine.setRows(8);
 		txtOptionalJEntry_Combine.setLineWrap(true);
-		txtOptionalJEntry_Combine.setBounds(317, 92, 300, 143);
+		txtOptionalJEntry_Combine.setBounds(317, 97, 295, 100);
 		inventoryItemsMatch.add(txtOptionalJEntry_Combine);
 		
 		lblPagenocombine = new JLabel("PageNo");
-		lblPagenocombine.setBounds(317, 302, 50, 14);
+		lblPagenocombine.setBounds(172, 262, 50, 14);
 		inventoryItemsMatch.add(lblPagenocombine);
 		
 		lblMapNo_Combine = new JLabel("Map No");
-		lblMapNo_Combine.setBounds(391, 302, 50, 14);
+		lblMapNo_Combine.setBounds(246, 262, 50, 14);
 		inventoryItemsMatch.add(lblMapNo_Combine);
 		
 		txtPageNo_Combine = new JTextField();
 		txtPageNo_Combine.setColumns(10);
-		txtPageNo_Combine.setBounds(317, 327, 64, 20);
-		inventoryItemsMatch.add(txtPageNo_Combine);
+		txtPageNo_Combine.setBounds(317, 324, 64, 20);
+		//inventoryItemsMatch.add(txtPageNo_Combine);
 		
 		txtMapNo_Combine = new JTextField();
 		txtMapNo_Combine.setColumns(10);
-		txtMapNo_Combine.setBounds(391, 327, 64, 20);
+		txtMapNo_Combine.setBounds(246, 287, 64, 20);
 		inventoryItemsMatch.add(txtMapNo_Combine);
 		
 		lblEffectDescription_Combine = new JLabel("Effect Description");
-		lblEffectDescription_Combine.setBounds(11, 67, 100, 14);
+		lblEffectDescription_Combine.setBounds(11, 72, 100, 14);
 		inventoryItemsMatch.add(lblEffectDescription_Combine);
 		
 		lblOptionalJournalEntry_Combine = new JLabel("(Optional) Journal Entry");
-		lblOptionalJournalEntry_Combine.setBounds(317, 67, 132, 14);
+		lblOptionalJournalEntry_Combine.setBounds(317, 72, 132, 14);
 		inventoryItemsMatch.add(lblOptionalJournalEntry_Combine);
 		
 		lblSanity_Combine = new JLabel("Sanity");
-		lblSanity_Combine.setBounds(10, 246, 50, 14);
+		lblSanity_Combine.setBounds(10, 262, 50, 14);
 		inventoryItemsMatch.add(lblSanity_Combine);
 		
 		txtSanity_Combine = new JTextField();
 		txtSanity_Combine.setColumns(10);
-		txtSanity_Combine.setBounds(10, 271, 64, 20);
+		txtSanity_Combine.setBounds(10, 287, 64, 20);
 		inventoryItemsMatch.add(txtSanity_Combine);
 		
 		txtSanityTreshold_Combine = new JTextField();
 		txtSanityTreshold_Combine.setColumns(10);
-		txtSanityTreshold_Combine.setBounds(84, 271, 64, 20);
+		txtSanityTreshold_Combine.setBounds(84, 287, 64, 20);
 		inventoryItemsMatch.add(txtSanityTreshold_Combine);
 		
 		lblSanityTreshold_Combine = new JLabel("Sanity Treshold");
-		lblSanityTreshold_Combine.setBounds(84, 246, 79, 14);
+		lblSanityTreshold_Combine.setBounds(84, 262, 79, 14);
 		inventoryItemsMatch.add(lblSanityTreshold_Combine);
 		
 		lblEmpathy_Combine = new JLabel("Empathy");
-		lblEmpathy_Combine.setBounds(10, 302, 50, 14);
+		lblEmpathy_Combine.setBounds(10, 318, 50, 14);
 		inventoryItemsMatch.add(lblEmpathy_Combine);
 		
 		txtEmpathy_Combine = new JTextField();
 		txtEmpathy_Combine.setColumns(10);
-		txtEmpathy_Combine.setBounds(10, 327, 64, 20);
+		txtEmpathy_Combine.setBounds(10, 343, 64, 20);
 		inventoryItemsMatch.add(txtEmpathy_Combine);
 		
 		txtEmpathyTreshold_Combine = new JTextField();
 		txtEmpathyTreshold_Combine.setColumns(10);
-		txtEmpathyTreshold_Combine.setBounds(84, 327, 64, 20);
+		txtEmpathyTreshold_Combine.setBounds(84, 343, 64, 20);
 		inventoryItemsMatch.add(txtEmpathyTreshold_Combine);
 		
 		lblEmpathyTreshold_Combine = new JLabel("Empathy Treshold");
-		lblEmpathyTreshold_Combine.setBounds(84, 302, 94, 14);
+		lblEmpathyTreshold_Combine.setBounds(84, 318, 94, 14);
 		inventoryItemsMatch.add(lblEmpathyTreshold_Combine);
 		
 		lblPagesLocked_Combined = new JLabel("PagesLocked");
-		lblPagesLocked_Combined.setBounds(317, 246, 79, 14);
+		lblPagesLocked_Combined.setBounds(320, 208, 79, 14);
 		inventoryItemsMatch.add(lblPagesLocked_Combined);
 		
 		txtPagesLocked_Combine = new JTextField();
 		txtPagesLocked_Combine.setColumns(10);
-		txtPagesLocked_Combine.setBounds(317, 268, 300, 20);
+		txtPagesLocked_Combine.setBounds(320, 230, 295, 20);
 		inventoryItemsMatch.add(txtPagesLocked_Combine);
+		
+		JComboBox<Object> cmbItemID_1 = new JComboBox<Object>(new Object[]{});
+		cmbItemID_1.setBounds(10, 36, 182, 20);
+		inventoryItemsMatch.add(cmbItemID_1);
+		
+		JComboBox<Object> cmbItemID_2 = new JComboBox<Object>(new Object[]{});
+		cmbItemID_2.setBounds(224, 36, 182, 20);
+		inventoryItemsMatch.add(cmbItemID_2);
+		
+		JComboBox<Object> cmbCreatedObjectID_COmbine;
+		cmbCreatedObjectID_COmbine = new JComboBox<Object>(new Object[]{});
+		cmbCreatedObjectID_COmbine.setBounds(430, 36, 182, 20);
+		inventoryItemsMatch.add(cmbCreatedObjectID_COmbine);
+		
+		JComboBox<Object> cmbPageNo_Combine;
+		cmbPageNo_Combine = new JComboBox<Object>(new Object[]{});
+		cmbPageNo_Combine.setBounds(172, 287, 64, 20);
+		inventoryItemsMatch.add(cmbPageNo_Combine);
+		
+		JComboBox<Object> cmbMapNo_Combine;
+		cmbMapNo_Combine = new JComboBox<Object>(new Object[]{});
+		cmbMapNo_Combine.setBounds(391, 355, 64, 20);
+		//inventoryItemsMatch.add(cmbMapNo_Combine);
+		
+		JButton btnRefreshItemsList_Combine = new JButton("Refresh All Lists");
+		btnRefreshItemsList_Combine.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					DBTools.connect(dbPathField.getText());
+					List<Item> rfl = DBTools.selectItems();
+					List<Storyline> stl = DBTools.selectStoryline();
+					
+					systemOutput.append("\n" + "Item lists refreshed");
+					
+					cmbItemID_1.removeAllItems();
+					cmbItemID_2.removeAllItems();
+					cmbCreatedObjectID_COmbine.removeAllItems();
+					cmbPageNo_Combine.removeAllItems();
+					cmbMapNo_Combine.removeAllItems();
+					
+					for(Storyline s : stl) {
+						cmbPageNo_Combine.addItem(s.getPageNo());
+					}
+					
+					
+					for(Item d : rfl) {
+						cmbItemID_1.addItem(d.getName());
+						cmbItemID_2.addItem(d.getName());
+						cmbCreatedObjectID_COmbine.addItem(d.getName());
+					}
+					
+					
+				} catch (Exception e1) {
+					systemOutput.append("\n" + e1.getMessage());
+				} finally{
+					DBTools.closeConnection();
+				}
+				
+			}
+		});
+		btnRefreshItemsList_Combine.setBounds(10, 374, 142, 23);
+		
+		JButton btnInsertInventoryItemsMatch = new JButton("Insert");
+		btnInsertInventoryItemsMatch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				InventoryItemsMatch i = new InventoryItemsMatch();
+				i.setItemID_1(cmbItemID_1.getSelectedItem().toString());
+				i.setItemID_2(cmbItemID_2.getSelectedItem().toString());
+				i.setCreatedObjectID(cmbCreatedObjectID_COmbine.getSelectedItem().toString());
+				i.setEfectDesc(txtEffectDescription_COmbine.getText());
+				i.setSanity(Integer.parseInt(txtSanity_Combine.getText()));
+				i.setEmpathy(Integer.parseInt(txtEmpathy_Combine.getText()));
+				i.setSanityTreshold(Integer.parseInt(txtSanityTreshold_Combine.getText()));
+				i.setEmpathyTreshold(Integer.parseInt(txtEmpathyTreshold_Combine.getText()));
+				i.setPageNo(/*txtPageNo_Combine.getText()*/cmbPageNo_Combine.getSelectedItem().toString());
+				i.setMapNo(txtMapNo_Combine.getText());
+				i.setOptionalJournalEntry(txtOptionalJEntry_Combine.getText());
+				i.setPagesLocked(txtPagesLocked_Combine.getText());
+				
+				try {
+					DBTools.connect(dbPathField.getText());
+					DBTools.insertInventoryItemsMatch(i);
+					systemOutput.append("\n" + i.toString());
+				} catch (Exception e1) {
+					systemOutput.append("\n" + e1.getMessage());
+				} finally{
+					DBTools.closeConnection();
+				}
+				
+			}
+		});
+		btnInsertInventoryItemsMatch.setBounds(221, 333, 90, 90);
+		inventoryItemsMatch.add(btnInsertInventoryItemsMatch);
+		
+		inventoryItemsMatch.add(btnRefreshItemsList_Combine);
+		
+		JTextArea txtPagePreview_Combine = new JTextArea();
+		txtPagePreview_Combine.setEditable(false);
+		txtPagePreview_Combine.setWrapStyleWord(true);
+		txtPagePreview_Combine.setRows(8);
+		txtPagePreview_Combine.setLineWrap(true);
+		txtPagePreview_Combine.setBounds(317, 285, 295, 172);
+		inventoryItemsMatch.add(txtPagePreview_Combine);
+		
+		JLabel lblPagePreview = new JLabel("PagePreview");
+		lblPagePreview.setBounds(317, 262, 86, 14);
+		inventoryItemsMatch.add(lblPagePreview);
+		
+		JButton btnLoadPreview_Combine = new JButton("Load Preview");
+		btnLoadPreview_Combine.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+					try {
+						String page = cmbPageNo_Combine.getSelectedItem().toString();
+						DBTools.connect(dbPathField.getText());
+						Storyline s1 = DBTools.selectStoryline(page).get(0);
+						System.out.println(s1);
+						txtPagePreview_Combine.setText(s1.getPageText());
+					} catch (Exception e1) {
+						systemOutput.append("\n" + e1.getMessage());
+					} finally{
+						DBTools.closeConnection();
+					}
+					
+				
+				
+				
+				
+			}
+		});
+		btnLoadPreview_Combine.setBounds(480, 258, 132, 23);
+		inventoryItemsMatch.add(btnLoadPreview_Combine);
+		
+		
+		
+		
 	}
 	
 	private void addJPanel_ReferenceDescriptions() {
