@@ -23,18 +23,18 @@ public class DBTools{
 	}
 
 
-	public static void connect(String path) {
+	public static void connect(String path) throws Exception {
         //Connection conn = null;
-        try {
+        //try {
             // db parameters
             String url = "jdbc:sqlite:"+path;
             // create a connection to the database
             conn = DriverManager.getConnection(url);
             //textArea.append("Connection to SQLite has been established.");
             
-        } catch (SQLException e) {
+        //} catch (SQLException e) {
         	//textArea.append(e.getMessage());
-        } /*finally {
+		/*} finally {
             try {
                 if (this.conn != null) {
                     this.conn.close();
@@ -57,11 +57,11 @@ public class DBTools{
 	}
 	
 	
-	public static void insertInteraction(Interaction i) {
+	public static void insertInteraction(Interaction i) throws SQLException {
 		String sql = "INSERT INTO Interactions(ReferenceDictionary_Reference, Name, Storyline_PageNo, MapNo, EmpathyValue, "
 					+ "SanityValue, Description, OptionalJournalEntry, EmpathyTreshold, SanityTreshold, PagesLocked, TakeItemID ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
 		
-		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+		PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, i.getReference());
             pstmt.setString(2, i.getName());
             pstmt.setString(3, i.getPage());
@@ -75,63 +75,55 @@ public class DBTools{
             pstmt.setString(11, i.getPagesLocked());
             pstmt.setString(12, i.getTakeItemID());
             pstmt.executeUpdate();
-        } catch (SQLException e) {
-        	System.out.println(e.getMessage());
-        }
+        
 		
 	}
 
 
-	public static void insertItem(Item i) {
+	public static void insertItem(Item i) throws SQLException {
 		String sql = "INSERT INTO Items(ItemID, Name, Description ) VALUES(?,?,?)";
 		
-		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+		PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, i.getItemId());
             pstmt.setString(2, i.getName());
             pstmt.setString(3, i.getDesc());
 
             pstmt.executeUpdate();
-        } catch (SQLException e) {
-            //textArea.append(e.getMessage());
-        }
+        
 		
 	}
 
 
-	public static void insertReferenceDictionary(ReferenceDictionary i) {
+	public static void insertReferenceDictionary(ReferenceDictionary i) throws Exception {
 		String sql = "INSERT INTO ReferenceDictionary(Reference, Name, Description ) VALUES(?,?,?)";
 		
-		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+		PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, i.getReference());
             pstmt.setString(2, i.getName());
             pstmt.setString(3, i.getDesc());
 
             pstmt.executeUpdate();
-        } catch (SQLException e) {
-            //textArea.append(e.getMessage());
-        }
+        
 	}
 
 
-	public static void insertStoryline(Storyline i) {
+	public static void insertStoryline(Storyline i) throws SQLException {
 		String sql = "INSERT INTO Storyline(PageNo, PageText, MilestoneJournalEntry ) VALUES(?,?,?)";
 		
-		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+		PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, i.getPageNo());
             pstmt.setString(2, i.getPageText());
             pstmt.setString(3, i.getMilestoneJournalEntry());
 
             pstmt.executeUpdate();
-        } catch (SQLException e) {
-            //textArea.append(e.getMessage());
-        }
+       
 	}
 	
-	public static List<ReferenceDictionary> selectReferenceDictionary(){
+	public static List<ReferenceDictionary> selectReferenceDictionary() throws SQLException{
 		String sql = "SELECT * FROM ReferenceDictionary";
 		List<ReferenceDictionary> rfl = new ArrayList<ReferenceDictionary>();
-		try (Statement stmt  = conn.createStatement();
-	         ResultSet rs    = stmt.executeQuery(sql)) {
+		Statement stmt  = conn.createStatement();
+	    ResultSet rs    = stmt.executeQuery(sql);
 			
 			while(rs.next()) {
 				rfl.add(new ReferenceDictionary(
@@ -140,27 +132,20 @@ public class DBTools{
 						rs.getString("Description")));
 			}
 			
-		}catch(SQLException sqle) {
-				System.out.println(sqle.getMessage());
-		}
 		return rfl;
 	}
 
 
-	public static String deleteStoryline(String pageNo) {
+	public static void deleteStoryline(String pageNo) throws SQLException {
 		String sql = "DELETE FROM Storyline WHERE PageNo = ?";
-		String out;
-		 try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+		//String out;
+		PreparedStatement pstmt = conn.prepareStatement(sql);
 	            // set the corresponding param
 	            pstmt.setString(1, pageNo);
 	            // execute the delete statement
 	            pstmt.executeUpdate();
-	            out = ">> PageNo: " + pageNo + "has been successfully removed.";
-	        } catch (SQLException e) {
-	            out = e.getMessage();
-	        }
-		 
-		 return out;
+	            //out = ">> PageNo: " + pageNo + "has been successfully removed.";
+		 //return out;
 	}
 
 

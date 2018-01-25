@@ -35,18 +35,16 @@ import javax.swing.JComboBox;
 
 public class TgeWindow {
 
-	
+	public JTextArea systemOutput = new JTextArea();
 	private String dbFilePath = "Choose a valid *.db file.";
-	//private DBTools dbt;
 	private JFrame frame;
 	private JTextField dbPathField;
 	private JTextArea txtOptionalJournalEntry;
-	
-	
 	private JTextField txtInteractionsReferenceDictionary_Reference;
 	private JTextField txtInteractionsName;
 	private JScrollPane scrollSysout;
-	public JTextArea systemOutput = new JTextArea();
+	
+	private JTextArea txtDescription;
 	private JTabbedPane tabbedPane;
 	private JPanel InteractionsPanel;
 	private JButton btnInsertInteraction;
@@ -54,7 +52,6 @@ public class TgeWindow {
 	private JTextField txtMapNo;
 	private JTextField txtEmpathyValue;
 	private JTextField txtSanityValue;
-	private JTextField txtDescription;
 	private JTextField txtEmpathyTreshold;
 	private JLabel lblStorylinepageno, lblMapno, lblEmpathyvalue, lblSanityvalue, lblDescription, lblEmpatyTreshold, lblReferenceDictionary_Reference, lblInteractionName;
 	
@@ -63,12 +60,10 @@ public class TgeWindow {
 	private JLabel lblDescriptionItems;
 	private JTextField txtItemID;
 	private JTextField txtNameItem;
-	private JTextField txtDescriptionItem;
 	private JButton btnInsertItem;
 	private JLabel lblReference;
 	private JLabel lblNameReference;
 	private JLabel lblDescriptionReference;
-	private JTextField txtDescriptionReference;
 	private JTextField txtNameReference;
 	private JTextField txtReferenceReference;
 	private JButton btnInsertReferenceDictionary;
@@ -93,6 +88,8 @@ public class TgeWindow {
 	private JLabel lblOptionaljournalentry;
 	private JLabel label;
 	private JLabel label_1;
+	private JTextArea txtDescriptionItem;
+	private JTextArea txtDescriptionReference;
 
 	
 	public static void main(String[] args) {
@@ -121,25 +118,27 @@ public class TgeWindow {
 
 	private void initialize() {
 		
-		frame = new JFrame();
+		createJFrame();
+		
+		/*frame = new JFrame();
 		frame.setBounds(100, 100, 663, 729);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frame.getContentPane().setLayout(null);*/
 		
-		dbPathField = new JTextField();
+		/*dbPathField = new JTextField();
 		dbPathField.setBounds(227, 12, 410, 20);
 		frame.getContentPane().add(dbPathField);
-		dbPathField.setColumns(10);
+		dbPathField.setColumns(10);*/
 		
-		JLabel lblSelectedDb = new JLabel("Selected DB >>");
+		/*JLabel lblSelectedDb = new JLabel("Selected DB >>");
 		lblSelectedDb.setBounds(121, 15, 96, 14);
-		frame.getContentPane().add(lblSelectedDb);
+		frame.getContentPane().add(lblSelectedDb);*/
 		
-		addTextArea();
+		addDBPathTextArea();
 		
 		addBtnSelectDB();
 		
-		addTabbedPane();
+		addTabContainer();
 		
 		
 		
@@ -149,7 +148,15 @@ public class TgeWindow {
 		
 	}
 
-	private void addBtnInserInteractionToThePanel() {
+	private void createJFrame() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 663, 729);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+	}
+
+
+	private void addBtnInsert_Interaction() {
 		btnInsertInteraction = new JButton("Insert");
 		btnInsertInteraction.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -272,11 +279,16 @@ public class TgeWindow {
 		txtOptionalJournalEntry.setLineWrap(true);
 		txtOptionalJournalEntry.setBounds(202, 279, 299, 57);
 		InteractionsPanel.add(txtOptionalJournalEntry);
+		
+		txtDescription = new JTextArea();
+		txtDescription.setWrapStyleWord(true);
+		txtDescription.setRows(8);
+		txtDescription.setLineWrap(true);
+		txtDescription.setBounds(202, 350, 299, 102);
+		InteractionsPanel.add(txtDescription);
 	}
 	
-	public void addJPanelStoryline() {
-		
-		
+	private void addJPanel_Storyline() {
 		Border blackline;
 		blackline = BorderFactory.createLineBorder(Color.BLACK);
 		TitledBorder tb = BorderFactory.createTitledBorder(blackline, "PageNo");
@@ -288,7 +300,7 @@ public class TgeWindow {
 		storylinePanel.setLayout(null);
 		
 		JComboBox<Object> jComboReferenceList = new JComboBox<>(rfls.toArray());
-		jComboReferenceList.setBounds(10, 123, 142, 20);
+		jComboReferenceList.setBounds(10, 170, 142, 20);
 		storylinePanel.add(jComboReferenceList);
 		
 		txtStorylinePageNo = new JTextField();
@@ -298,9 +310,9 @@ public class TgeWindow {
 		//txtStorylinePageNo.setBorder(tb);
 		
 		JEditorPane editorPane = new JEditorPane();
-		editorPane.setForeground(Color.WHITE);
-		editorPane.setBackground(Color.BLACK);
-		editorPane.setBounds(162, 11, 450, 305);
+		editorPane.setForeground(Color.BLACK);
+		editorPane.setBackground(Color.WHITE);
+		editorPane.setBounds(162, 31, 450, 340);
 		storylinePanel.add(editorPane);
 		
 		JLabel lblStorylineTarget = new JLabel("Target word");
@@ -313,7 +325,7 @@ public class TgeWindow {
 		storylinePanel.add(txtStorylineTargetWord);
 		
 		JLabel lblStorylineReference = new JLabel("Reference");
-		lblStorylineReference.setBounds(10, 98, 142, 14);
+		lblStorylineReference.setBounds(10, 111, 142, 14);
 		storylinePanel.add(lblStorylineReference);
 		
 		JSeparator separator = new JSeparator();
@@ -332,7 +344,7 @@ public class TgeWindow {
 				editorPane.setText(changedText);
 			}
 		});
-		btnAddReference.setBounds(10, 280, 142, 23);
+		btnAddReference.setBounds(10, 201, 142, 23);
 		storylinePanel.add(btnAddReference);
 		
 		JButton btnAddPage = new JButton("Save Page");
@@ -351,7 +363,7 @@ public class TgeWindow {
 				}
 			}
 		});
-		btnAddPage.setBounds(10, 361, 142, 23);
+		btnAddPage.setBounds(10, 434, 142, 23);
 		storylinePanel.add(btnAddPage);
 		
 		JButton btnDeletePage = new JButton("Delete Page");
@@ -360,7 +372,8 @@ public class TgeWindow {
 				
 				try {
 					DBTools.connect(dbPathField.getText());
-					systemOutput.append("\n" + DBTools.deleteStoryline(txtStorylinePageNo.getText()));
+					DBTools.deleteStoryline(txtStorylinePageNo.getText());
+					systemOutput.append("\n" + "Story page removed");
 					systemOutput.append("\n" + txtStorylinePageNo.getText());
 				} catch (Exception e1) {
 					systemOutput.append("\n" + e1.getMessage());
@@ -369,7 +382,7 @@ public class TgeWindow {
 				}
 			}
 		});
-		btnDeletePage.setBounds(10, 327, 142, 23);
+		btnDeletePage.setBounds(10, 400, 142, 23);
 		storylinePanel.add(btnDeletePage);
 		
 		btnRedoReference = new JButton("Redo");
@@ -382,13 +395,13 @@ public class TgeWindow {
 				}
 			}
 		});
-		btnRedoReference.setBounds(10, 246, 142, 23);
+		btnRedoReference.setBounds(10, 280, 142, 23);
 		storylinePanel.add(btnRedoReference);
 		
 		editorPane_Milestone = new JEditorPane();
-		editorPane_Milestone.setForeground(Color.WHITE);
-		editorPane_Milestone.setBackground(Color.BLACK);
-		editorPane_Milestone.setBounds(162, 327, 450, 57);
+		editorPane_Milestone.setForeground(Color.BLACK);
+		editorPane_Milestone.setBackground(Color.WHITE);
+		editorPane_Milestone.setBounds(162, 400, 450, 57);
 		storylinePanel.add(editorPane_Milestone);
 		
 		//String[] referencesFromDb = new String[] {"a", "b", "c"};
@@ -405,10 +418,7 @@ public class TgeWindow {
 				try {
 					DBTools.connect(dbPathField.getText());
 					List<ReferenceDictionary> rfl = DBTools.selectReferenceDictionary();
-					/*rfls = new ArrayList<String>();
-					for(ReferenceDictionary d : rfl) {
-						rfls.add(d.getName());
-					}*/
+					
 					systemOutput.append("\n" + "Reference list refreshed");
 					
 					jComboReferenceList.removeAllItems();
@@ -427,15 +437,27 @@ public class TgeWindow {
 				
 			}
 		});
-		btnRefreshReferenceList.setBounds(10, 154, 142, 23);
+		btnRefreshReferenceList.setBounds(10, 136, 142, 23);
 		storylinePanel.add(btnRefreshReferenceList);
 		
 		JLabel lblPageno = new JLabel("PageNo");
 		lblPageno.setBounds(10, 14, 46, 14);
 		storylinePanel.add(lblPageno);
+		
+		JSeparator separator_2 = new JSeparator();
+		separator_2.setBounds(10, 98, 142, 2);
+		storylinePanel.add(separator_2);
+		
+		JLabel storylineEditorLabel = new JLabel("Page content");
+		storylineEditorLabel.setBounds(162, 11, 96, 14);
+		storylinePanel.add(storylineEditorLabel);
+		
+		JLabel OptionalMilestoneContentLabel = new JLabel("(Optional) Milestone journal content");
+		OptionalMilestoneContentLabel.setBounds(162, 382, 187, 14);
+		storylinePanel.add(OptionalMilestoneContentLabel);
 	}
 	
-	public void addJPanelReferenceDescriptions() {
+	private void addJPanel_ReferenceDescriptions() {
 		JPanel referenceDictionaryPanel = new JPanel();
 		tabbedPane.addTab("ReferenceDictionary", null, referenceDictionaryPanel, null);
 		referenceDictionaryPanel.setLayout(null);
@@ -451,11 +473,6 @@ public class TgeWindow {
 		lblDescriptionReference = new JLabel("Description");
 		lblDescriptionReference.setBounds(10, 64, 182, 14);
 		referenceDictionaryPanel.add(lblDescriptionReference);
-		
-		txtDescriptionReference = new JTextField();
-		txtDescriptionReference.setColumns(10);
-		txtDescriptionReference.setBounds(202, 61, 299, 20);
-		referenceDictionaryPanel.add(txtDescriptionReference);
 		
 		txtNameReference = new JTextField();
 		txtNameReference.setColumns(10);
@@ -483,7 +500,7 @@ public class TgeWindow {
 				}
 			}
 		});
-		btnInsertReferenceDictionary.setBounds(10, 244, 89, 23);
+		btnInsertReferenceDictionary.setBounds(10, 400, 89, 23);
 		referenceDictionaryPanel.add(btnInsertReferenceDictionary);
 		
 		buttonReferenceDictionaryClear = new JButton("Clear");
@@ -494,7 +511,7 @@ public class TgeWindow {
 				txtDescriptionReference.setText("");
 			}
 		});
-		buttonReferenceDictionaryClear.setBounds(103, 244, 89, 23);
+		buttonReferenceDictionaryClear.setBounds(103, 400, 89, 23);
 		referenceDictionaryPanel.add(buttonReferenceDictionaryClear);
 		
 		btnDeleteReference = new JButton("Delete Reference");
@@ -510,11 +527,18 @@ public class TgeWindow {
 				}
 			}
 		});
-		btnDeleteReference.setBounds(10, 278, 142, 23);
+		btnDeleteReference.setBounds(10, 434, 142, 23);
 		referenceDictionaryPanel.add(btnDeleteReference);
+		
+		txtDescriptionReference = new JTextArea();
+		txtDescriptionReference.setWrapStyleWord(true);
+		txtDescriptionReference.setRows(8);
+		txtDescriptionReference.setLineWrap(true);
+		txtDescriptionReference.setBounds(202, 64, 299, 365);
+		referenceDictionaryPanel.add(txtDescriptionReference);
 	}
 	
-	public void addJPanelItems() {
+	private void addJPanel_Items() {
 		JPanel ItemsPanel = new JPanel();
 		tabbedPane.addTab("Items", null, ItemsPanel, null);
 		ItemsPanel.setLayout(null);
@@ -541,10 +565,10 @@ public class TgeWindow {
 		txtNameItem.setBounds(202, 36, 299, 20);
 		ItemsPanel.add(txtNameItem);
 		
-		txtDescriptionItem = new JTextField();
+		/*txtDescriptionItem = new JTextField();
 		txtDescriptionItem.setColumns(10);
 		txtDescriptionItem.setBounds(202, 61, 299, 20);
-		ItemsPanel.add(txtDescriptionItem);
+		ItemsPanel.add(txtDescriptionItem);*/
 		
 		btnInsertItem = new JButton("Insert");
 		btnInsertItem.addActionListener(new ActionListener() {
@@ -554,8 +578,6 @@ public class TgeWindow {
 						txtNameItem.getText(), 
 						txtDescriptionItem.getText()
 						);
-				
-				System.out.println(i);
 				try {
 					DBTools.connect(dbPathField.getText());
 					DBTools.insertItem(i);
@@ -568,7 +590,7 @@ public class TgeWindow {
 				
 			}
 		});
-		btnInsertItem.setBounds(10, 244, 89, 23);
+		btnInsertItem.setBounds(10, 400, 89, 23);
 		ItemsPanel.add(btnInsertItem);
 		
 		buttonItemsClear = new JButton("Clear");
@@ -579,7 +601,7 @@ public class TgeWindow {
 				txtDescriptionItem.setText("");
 			}
 		});
-		buttonItemsClear.setBounds(103, 244, 89, 23);
+		buttonItemsClear.setBounds(103, 400, 89, 23);
 		ItemsPanel.add(buttonItemsClear);
 		
 		btnDeleteItem = new JButton("Delete Item");
@@ -595,11 +617,18 @@ public class TgeWindow {
 				}
 			}
 		});
-		btnDeleteItem.setBounds(10, 278, 142, 23);
+		btnDeleteItem.setBounds(10, 434, 142, 23);
 		ItemsPanel.add(btnDeleteItem);
+		
+		txtDescriptionItem = new JTextArea();
+		txtDescriptionItem.setWrapStyleWord(true);
+		txtDescriptionItem.setRows(8);
+		txtDescriptionItem.setLineWrap(true);
+		txtDescriptionItem.setBounds(202, 64, 299, 365);
+		ItemsPanel.add(txtDescriptionItem);
 	}
 
-	private void addJPanelInteractions() {
+	private void addJPanel_Interactions() {
 		InteractionsPanel = new JPanel();
 		tabbedPane.addTab("Interactions", null, InteractionsPanel, null);
 		InteractionsPanel.setLayout(null);
@@ -666,34 +695,38 @@ public class TgeWindow {
 		txtSanityValue.setBounds(202, 136, 142, 20);
 		InteractionsPanel.add(txtSanityValue);
 		
-		txtDescription = new JTextField();
-		lblDescription.setLabelFor(txtDescription);
-		txtDescription.setColumns(10);
-		txtDescription.setBounds(202, 347, 299, 100);
-		InteractionsPanel.add(txtDescription);
-		
 		txtEmpathyTreshold = new JTextField();
 		lblEmpatyTreshold.setLabelFor(txtEmpathyTreshold);
 		txtEmpathyTreshold.setColumns(10);
 		txtEmpathyTreshold.setBounds(202, 164, 142, 20);
 		InteractionsPanel.add(txtEmpathyTreshold);
 		
-		addBtnInserInteractionToThePanel();
+		addBtnInsert_Interaction();
 	}
 
-	private void addTabbedPane() {
+	private void addTabContainer() {
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(10, 45, 627, 496);
 		frame.getContentPane().add(tabbedPane);
 		
-		addJPanelInteractions();
-		addJPanelItems();
-		addJPanelReferenceDescriptions();
-		addJPanelStoryline();
+		addJPanel_Interactions();
+		addJPanel_Items();
+		addJPanel_ReferenceDescriptions();
+		addJPanel_Storyline();
 		
 	}
 	
-	public void addTextArea() {
+	private void addDBPathTextArea() {
+		
+		dbPathField = new JTextField();
+		dbPathField.setBounds(227, 12, 410, 20);
+		frame.getContentPane().add(dbPathField);
+		dbPathField.setColumns(10);
+		
+		JLabel lblSelectedDb = new JLabel("Selected DB >>");
+		lblSelectedDb.setBounds(121, 15, 96, 14);
+		frame.getContentPane().add(lblSelectedDb);
+		
 		systemOutput.setText(">> Select SQLite DB file first.");
 		systemOutput.setWrapStyleWord(true);
 		systemOutput.setLineWrap(true);
@@ -707,7 +740,7 @@ public class TgeWindow {
 		frame.getContentPane().add(scrollSysout);
 	}
 	
-	public void addBtnSelectDB() {
+	private void addBtnSelectDB() {
 		JButton btnSelectDb = new JButton("Select DB");
 		btnSelectDb.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
