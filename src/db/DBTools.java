@@ -10,9 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import db.entity.Interaction;
+import db.entity.InventoryItemUseRefMatch;
 import db.entity.InventoryItemsMatch;
 import db.entity.Item;
 import db.entity.ReferenceDictionary;
+import db.entity.StorySpecification;
 import db.entity.Storyline;
 
 public class DBTools{
@@ -116,6 +118,39 @@ public class DBTools{
             pstmt.setString(2, i.getPageText());
             pstmt.setString(3, i.getMilestoneJournalEntry());
             pstmt.executeUpdate();
+	}
+	
+	public static void insertStorySpecification(StorySpecification i) throws SQLException {
+		String sql = "INSERT INTO StorySpecification(StoryName, StoryDescription, StartingPageNo, StartingEmpathy, StartingSanity ) VALUES(?,?,?,?,?)";
+		
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, i.getStoryName());
+            pstmt.setString(2, i.getStoryDescription());
+            pstmt.setString(3, i.getStartingPageNo());
+            pstmt.setInt(4, i.getStartingEmpathy());
+            pstmt.setInt(5, i.getStartingSanity());
+            pstmt.executeUpdate();
+	}
+	
+	public static void insertInventoryItemUseRefMatch(InventoryItemUseRefMatch i) throws SQLException {
+		String sql = "INSERT INTO InventoryItemUseRefMatch(RefName, ItemID, EffectDescription, Sanity, Empathy, SanityTreshold, EmpathyTreshold, PageNo, MapNo, OptionalJournalEntry, PagesLocked, RemoveFromInventoryFlag ) "
+				+ "VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+		
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, i.getRefName());
+            pstmt.setString(2, i.getItemID());
+            pstmt.setString(3, i.getEffectDescript());
+            pstmt.setInt(4, i.getSanity());
+            pstmt.setInt(5, i.getEmpathy());
+            pstmt.setInt(6, i.getSanityTreshold());
+            pstmt.setInt(7, i.getEmpathyTreshold());
+            pstmt.setString(8, i.getPageNo());
+            pstmt.setString(9, i.getMapNo());
+            pstmt.setString(10, i.getOptionalJOurnalEntry());
+            pstmt.setString(11, i.getPagesLocked());
+            pstmt.setString(12, i.getRemoveFromInventoryFlag());
+            pstmt.executeUpdate();
+		
 	}
 	
 	public static void insertInventoryItemsMatch(InventoryItemsMatch i) throws SQLException {
@@ -261,6 +296,41 @@ public class DBTools{
 	        }
 		 return out;
 	}
+
+
+	public static void deleteInventoryItemsMatch(String itemID_1, String itemID_2, String createdObjectID) throws Exception {
+		String sql = "DELETE FROM InventoryItemsMatch WHERE ItemID_1 = ? AND ItemID_2 = ? AND CreatedObjectID = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+	            pstmt.setString(1, itemID_1);
+	            pstmt.setString(2, itemID_2);
+	            pstmt.setString(3, createdObjectID);
+	            pstmt.executeUpdate();
+
+	}
+
+
+	public static void deleteStorySpecification(String storyName) throws Exception {
+		String sql = "DELETE FROM StorySpecification WHERE StoryName = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+	            pstmt.setString(1, storyName);
+	          
+	            pstmt.executeUpdate();
+	}
+
+
+	public static void deleteInventoryItemUseRefMatch(String refName, String itemID) throws SQLException {
+		String sql = "DELETE FROM InventoryItemUseRefMatch WHERE Refname = ? AND ItemID = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+	            pstmt.setString(1, refName);
+	            pstmt.setString(2, itemID);
+	            pstmt.executeUpdate();
+	}
+
+
+	
+
+
+	
 
 
 	
